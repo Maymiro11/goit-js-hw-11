@@ -95,19 +95,25 @@ form.form button[type="submit"]:focus {
 }
 .gallery{
   margin-top: 200px;
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 20px; */
+  margin-left: 15px;
+  margin-right: 15px;
   justify-content: center;
+
+  display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 20px;
 }
 .card {
-  width: calc(20% - 20px); 
+  /* width: calc(20% - 20px); 
   margin-bottom: 20px; 
   position: relative;
   height: 200px;
-  width: 360px;
+  width: 360px; */
+  width: 100%;
+  position: relative;
 }
 .card img {
   width: 100%;
