@@ -59,10 +59,10 @@ function imgTemplate(hit) {
     <img src="${hit.webformatURL}" alt="${hit.tags}">
 </a>
 <div class="details">
-    <p>Likes: ${hit.likes}</p>
-    <p>Views: ${hit.views}</p>
-    <p>Comments: ${hit.comments}</p>
-    <p>Downloads: ${hit.downloads}</p>
+    <p><strong>Likes:</strong> ${hit.likes}</p>
+    <p><strong>Views:</strong> ${hit.views}</p>
+    <p><strong>Comments:</strong> ${hit.comments}</p>
+    <p><strong>Downloads:</strong> ${hit.downloads}</p>
 </div>
 </div>`;
 }
