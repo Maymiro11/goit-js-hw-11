@@ -8,6 +8,10 @@ const lightbox = new SimpleLightbox('.gallery a', { scrollZoom: false });
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
+const btnLoader = document.querySelector('.btn-load');
+
+let query;
+let page = 1;
 
 form.addEventListener('submit', onFormSubmit);
 
@@ -19,6 +23,8 @@ function fetchImg(query) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    page: page,
+    per_page: 15,
   });
   const url = BASE_URL + PARAMS;
 
@@ -26,11 +32,12 @@ function fetchImg(query) {
 }
 function onFormSubmit(e) {
   e.preventDefault();
-
-  const query = document.querySelector('input[type="text"]').value.trim();
+page = 1;
+query = document.querySelector('input[type="text"]').value.trim();
 
   if (query !== '') {
-    loader.style.display = 'inline-block';
+    loader.classList.remove('hidden');
+    btnLoader.classList.remove('hidden');
 
     fetchImg(query)
       .then(data => {
@@ -41,11 +48,13 @@ function onFormSubmit(e) {
           gallery.innerHTML = imagesTemplate(data.hits);
 
           lightbox.refresh();
+          btnLoader.classList.remove('hidden');
         }
       })
       .catch(error => console.error('Error fetching data:', error))
       .finally(() => {
-        loader.style.display = 'none';
+        loader.classList.add('hidden');
+        
       });
   }
 }
@@ -65,4 +74,26 @@ function imgTemplate(hit) {
     <p>Downloads: ${hit.downloads}</p>
 </div>
 </div>`;
+}
+
+btnLoader.addEventListener('click', onButtonClick);
+
+function onButtonClick () {
+page += 1;
+    fetchImg(query)
+      .then(data => {
+        if (data.hits.length === 0) {
+          gallery.innerHTML =
+            '<p>Sorry, there are no images matching your search query. Please try again!</p>';
+        } else {
+            gallery.insertAdjacentHTML('beforeend', imagesTemplate(data.hits));
+        
+
+          lightbox.refresh();
+        }
+      })
+      .catch(error => console.error('Error fetching data:', error))
+      .finally(() => {
+        loader.style.display = 'none';
+      });
 }
