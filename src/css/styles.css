@@ -42,10 +42,13 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: #ffffff;
   color: #212121;
   line-height: 1.5;
   width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 form.form {
   width: 272px;
@@ -53,25 +56,18 @@ form.form {
   display: flex;
   flex-direction: row;
   gap: 12px;
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 24px;
-  background-repeat: 4px;
+margin-top: 20px;
 }
 form.form > label {
   font-size: 24px;
 }
 form.form input {
   padding: 8px;
-  
   color: #2e2f42;
   font-family: Montserrat;
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.04em;
-
   border: 1px solid #808080;
 border-radius: 4px;
 width: 272px;
@@ -112,7 +108,6 @@ form.form button[type="submit"]:focus {
   box-shadow: 0 0 5px 1px rgba(112, 128, 144, 0.3);
 }
 .gallery{
-  margin-top: 200px; 
   display: flex;
   width: 100%;
   padding: 24px;
@@ -123,6 +118,7 @@ form.form button[type="submit"]:focus {
   justify-content: center;
 align-items: flex-start;
 padding-top: 24px;
+z-index: 100;
 }
 .gallery img {
   width: 360px;
@@ -189,3 +185,26 @@ padding-top: 6px;
       transform: rotate(360deg);
   }
   } 
+  .back-img {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    inset: 0;
+    width: 100%;
+    object-fit: cover;
+    transform: translateY(20%) scale(1.6);
+    z-index: -1;
+    transition: transform .3s;
+    animation: anim 20s ease-out infinite 0s;
+  }
+  @keyframes anim {
+
+    0%,
+    100% {
+      transform: translateX(0%) translateY(20%) scale(1.6);
+    }
+
+    50% {
+      transform: translateX(10%) translateY(25%) scale(1.6);
+    }
+  }
