@@ -73,6 +73,7 @@ form.form input {
   letter-spacing: 0.04em;
 
   border: 1px solid #808080;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 border-radius: 4px;
 width: 272px;
 height: 40px;
@@ -112,18 +113,23 @@ form.form button[type="submit"]:focus {
   box-shadow: 0 0 5px 1px rgba(112, 128, 144, 0.3);
 }
 .gallery{
+<<<<<<< Updated upstream
   margin-top: 200px; 
   display: flex;
   width: 100%;
   padding: 24px;
   flex-wrap: wrap;
   gap: 24px; 
+=======
+  margin-top: 200px;
+>>>>>>> Stashed changes
   margin-left: 15px;
   margin-right: 15px;
   justify-content: center;
 align-items: flex-start;
 padding-top: 24px;
 }
+<<<<<<< Updated upstream
 .gallery img {
   width: 360px;
   height: 200px;
@@ -136,6 +142,11 @@ padding-top: 24px;
   flex-shrink: 0;
   cursor: pointer;
   transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
+=======
+.card {
+  width: 100%;
+  position: relative;
+>>>>>>> Stashed changes
 }
 .card img:hover {
   scale: 1.08;
@@ -157,7 +168,11 @@ padding-top: 24px;
   position: absolute;
   bottom: 0;
   left: 0;
+<<<<<<< Updated upstream
 
+=======
+  width: 100%;
+>>>>>>> Stashed changes
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-bottom: 1px solid #808080;

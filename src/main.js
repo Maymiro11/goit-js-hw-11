@@ -5,6 +5,9 @@ import 'izitoast/dist/css/iziToast.min.css';
 import errorIcon from '../src/img/izitoast-icon.svg';
 import closeIcon from '../src/img/izitoast-close.svg';
 
+import errorIcon from '../src/img/izitoast-icon.svg';
+import closeIcon from '../src/img/izitoast-close.svg';
+
 const lightbox = new SimpleLightbox('.gallery a', { scrollZoom: false });
 
 const form = document.querySelector('.form');
@@ -37,6 +40,7 @@ function onFormSubmit(e) {
     fetchImg(query)
       .then(data => {
         if (data.hits.length === 0) {
+<<<<<<< Updated upstream
 
           iziToast.show({
             messageAlign: 'center',
@@ -62,6 +66,36 @@ function onFormSubmit(e) {
         });
 
           form.reset();
+=======
+          iziToast.show({
+            rounded: true,
+            message: 'Sorry, there are no images matching <br> your search query. Please try again!',
+            iconUrl: errorIcon,
+
+            messageColor: '#FFFFFF',
+      messageSize: '16px',
+      position: 'center',
+      backgroundColor: '#EF4040',
+      progressBarColor: '#B51B1B',
+      iconUrl: errorIcon,
+      displayMode: 'replace',
+      close: false,
+      closeOnEscape: true,
+      pauseOnHover: false,
+      buttons: [
+        [
+          `<button type="button" style="background-color: transparent;"><img src=${closeIcon}></button>`,
+          function (instance, toast) {
+            instance.hide({ transitionOut: 'fadeOut' }, toast);
+          },
+        ],
+      ],
+
+        });
+        form.reset();
+          //gallery.innerHTML =
+            //'<p>Sorry, there are no images matching your search query. Please try again!</p>';
+>>>>>>> Stashed changes
         } else {
           gallery.innerHTML = imagesTemplate(data.hits);
 
