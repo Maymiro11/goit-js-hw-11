@@ -2,6 +2,8 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import errorIcon from '../src/img/izitoast-icon.svg';
+import closeIcon from '../src/img/izitoast-close.svg';
 
 const lightbox = new SimpleLightbox('.gallery a', { scrollZoom: false });
 
@@ -32,8 +34,8 @@ function fetchImg(query) {
 }
 function onFormSubmit(e) {
   e.preventDefault();
-page = 1;
-query = document.querySelector('input[type="text"]').value.trim();
+  page = 1;
+  query = document.querySelector('input[type="text"]').value.trim();
 
   if (query !== '') {
     loader.classList.remove('hidden');
@@ -42,8 +44,31 @@ query = document.querySelector('input[type="text"]').value.trim();
     fetchImg(query)
       .then(data => {
         if (data.hits.length === 0) {
-          gallery.innerHTML =
-            '<p>Sorry, there are no images matching your search query. Please try again!</p>';
+          iziToast.show({
+            messageAlign: 'center',
+            message:
+              'Sorry, there are no images matching <br> your search query. Please try again!',
+            messageColor: '#FFFFFF',
+            messageSize: '16px',
+            position: 'center',
+            backgroundColor: '#EF4040',
+            progressBarColor: '#B51B1B',
+            iconUrl: errorIcon,
+            displayMode: 'replace',
+            close: false,
+            closeOnEscape: true,
+            pauseOnHover: false,
+            buttons: [
+              [
+                `<button type="button" style="background-color: transparent;"><img src=${closeIcon}></button>`,
+                function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast);
+                },
+              ],
+            ],
+          });
+
+          form.reset();
         } else {
           gallery.innerHTML = imagesTemplate(data.hits);
 
@@ -54,7 +79,6 @@ query = document.querySelector('input[type="text"]').value.trim();
       .catch(error => console.error('Error fetching data:', error))
       .finally(() => {
         loader.classList.add('hidden');
-        
       });
   }
 }
@@ -63,37 +87,36 @@ function imagesTemplate(hits) {
 }
 
 function imgTemplate(hit) {
-  return `<div class="card">
+  return `<li class="gallery-card">
 <a href="${hit.largeImageURL}" data-lightbox="image">
-    <img src="${hit.webformatURL}" alt="${hit.tags}">
+    <img class="gallery-image"
+    src="${hit.webformatURL}" alt="${hit.tags}">
 </a>
 <div class="details">
-    <p>Likes: ${hit.likes}</p>
-    <p>Views: ${hit.views}</p>
-    <p>Comments: ${hit.comments}</p>
-    <p>Downloads: ${hit.downloads}</p>
+    <p><strong>Likes:</strong> ${hit.likes}</p>
+    <p><strong>Views:</strong> ${hit.views}</p>
+    <p><strong>Comments:</strong> ${hit.comments}</p>
+    <p><strong>Downloads:</strong> ${hit.downloads}</p>
 </div>
-</div>`;
+</li>`;
 }
-
 btnLoader.addEventListener('click', onButtonClick);
 
-function onButtonClick () {
-page += 1;
-    fetchImg(query)
-      .then(data => {
-        if (data.hits.length === 0) {
-          gallery.innerHTML =
-            '<p>Sorry, there are no images matching your search query. Please try again!</p>';
-        } else {
-            gallery.insertAdjacentHTML('beforeend', imagesTemplate(data.hits));
-        
+function onButtonClick() {
+  page += 1;
+  fetchImg(query)
+    .then(data => {
+      if (data.hits.length === 0) {
+        gallery.innerHTML =
+          '<p>Sorry, there are no images matching your search query. Please try again!</p>';
+      } else {
+        gallery.insertAdjacentHTML('beforeend', imagesTemplate(data.hits));
 
-          lightbox.refresh();
-        }
-      })
-      .catch(error => console.error('Error fetching data:', error))
-      .finally(() => {
-        loader.style.display = 'none';
-      });
+        lightbox.refresh();
+      }
+    })
+    .catch(error => console.error('Error fetching data:', error))
+    .finally(() => {
+      loader.style.display = 'none';
+    });
 }
